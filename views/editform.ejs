@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Open Sans", sans-serif;
+            background-color:#1F4769;
+            animation: bg 30s infinite linear;
+            color: #333;
+        }
+        .spacer {
+            width: 100%;
+            height: 100px;
+        }
+        nav {
+            width: 100%;
+            background-color:#1F4769;
+            animation: bg 30s infinite linear;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .logo {
+            text-decoration: none;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav .nav-bar {
+            display: flex;
+        }
+        nav .nav-bar .nav-bar_item {
+            list-style-type: none;
+            margin-left: 20px;
+        }
+        nav .nav-bar .nav-bar_item a {
+            position: relative;
+            display: block;
+            padding: 10px 0;
+            text-decoration: none;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        nav .nav-bar .nav-bar_item a:hover {
+            color: #ffdd57;
+        }
+        nav .nav-bar .nav-bar_item a:after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ffdd57;
+            transition: width 0.3s ease;
+        }
+        nav .nav-bar .nav-bar_item a:hover:after {
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            margin: 40px 0;
+            margin-top: 140px;
+            font-size: 2.5em;
+            color: white;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .error {
+            border-color: #ff4d4d;
+            background-color: #ffe5e5;
+        }
+        .error-message {
+            color: #ff4d4d;
+            margin-bottom: 10px;
+        }
+        form button {
+            width: 100%;
+            padding: 15px;
+            background-color:#1F4769;
+            animation: bg 30s infinite linear;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        form button:hover {
+            background-color:#1F4769;
+            animation: bg 30s infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="logo" href="#">Logo</a>
+        <ul class="nav-bar">
+            <li class="nav-bar_item"><a href="/">home</a></li>
+            <li class="nav-bar_item"><a href="/allcamps">all camps</a></li>
+            <li class="nav-bar_item"><a href="/addcamp">add camp</a></li>
+        </ul>
+    </nav>
+    <h1>Edit Campground</h1>
+    <form id="campgroundForm" action="/editcamp/<%= camp.id %>" method="POST">
+        <div class="error-message" id="errorMessage"></div>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" value="<%= camp.title %>" name="title" required>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" value="<%= camp.price %>" name="price" required>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required><%= camp.description %></textarea>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" value="<%= camp.location %>" name="location" required>
+
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*">
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('campgroundForm').addEventListener('submit', function(event) {
+            const title = document.getElementById('title');
+            const price = document.getElementById('price');
+            const description = document.getElementById('description');
+            const location = document.getElementById('location');
+            const errorMessage = document.getElementById('errorMessage');
+
+            let valid = true;
+            errorMessage.innerHTML = '';
+            [title, price, description, location].forEach(field => {
+                field.classList.remove('error');
+            });
+
+            if (title.value.trim() === '') {
+                valid = false;
+                title.classList.add('error');
+                errorMessage.innerHTML += '<p>Title is required.</p>';
+            }
+
+            if (price.value.trim() === '' || isNaN(price.value) || Number(price.value) <= 0) {
+                valid = false;
+                price.classList.add('error');
+                errorMessage.innerHTML += '<p>Price must be a valid positive number.</p>';
+            }
+
+            if (description.value.trim() === '') {
+                valid = false;
+                description.classList.add('error');
+                errorMessage.innerHTML += '<p>Description is required.</p>';
+            }
+
+            if (location.value.trim() === '') {
+                valid = false;
+                location.classList.add('error');
+                errorMessage.innerHTML += '<p>Location is required.</p>';
+            }
+
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
