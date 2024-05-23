@@ -155,15 +155,24 @@
         </ul>
     </nav>
 
-    <div class="card">
-      <div class="product-info">
-        <h1 class="product-name"><%= camp.title %></h1>
-        <h2 class="product-price"><%= camp.price %></h2>
-        <h3 class="product-slogan"><%= camp.description %></h3>
-        <a class="button edit-btn" data-camp-id="<%= camp._id %>" href="#">edit</a>
-        <a class="button delete-btn" data-camp-id="<%= camp._id %>" href="#">delete</a>
-      </div>
-    </div>
+    <% if (camp) { %>
+        <div class="card">
+            <div class="product-info">
+                <h1 class="product-name"><%= camp.title %></h1>
+                <h2 class="product-price"><%= camp.price %></h2>
+                <h3 class="product-slogan"><%= camp.description %></h3>
+                <a class="button edit-btn" data-camp-id="<%= camp._id %>" href="#">edit</a>
+                <a class="button delete-btn" data-camp-id="<%= camp._id %>" href="#">delete</a>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="card">
+                    <div class="product-info">
+                        <h1 class="product-name"><%= "successfully deleted" %></h1>
+                    </div>
+                </div>
+    <% } %>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
