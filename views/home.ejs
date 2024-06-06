@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <%- include('header') %>
     <style>
         * {
             margin: 0;
@@ -16,48 +17,6 @@
         }
         body {
             font-family: "Open Sans", sans-serif;
-        }
-        nav {
-            width: 100%;
-            background-color:#1F4769;
-            animation: bg 30s infinite linear;
-            display: flex;
-            justify-content: space-between;
-        }
-        .logo {
-            padding: 20px;
-            text-decoration: none;
-            color: #fff;
-            text-transform: uppercase;
-        }
-        nav .nav-bar {
-            padding: 20px;
-            display: flex;
-        }
-        nav .nav-bar .nav-bar_item {
-            list-style-type: none;
-            padding: 0px 20px;
-        }
-        nav .nav-bar .nav-bar_item a {
-            position: relative;
-            display: block;
-            padding-bottom: 5px;
-            text-decoration: none;
-            color: #fff;
-            text-transform: uppercase;
-        }
-        nav .nav-bar .nav-bar_item a:after {
-            content: "";
-            position: absolute;
-            width: 0%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #fff;
-            transition: 0.1s ease-in-out;
-        }
-        nav .nav-bar .nav-bar_item a:hover:after {
-            width: 100%;
         }
         .text h1 {
           position:absolute;
@@ -593,14 +552,6 @@
     </style>
 </head>
 <body>
-    <nav>
-        <a class="logo" href="/">Camphub</a>
-        <ul class="nav-bar">
-            <li class="nav-bar_item"><a href="/">home</a></li>
-            <li class="nav-bar_item"><a href="/allcamps">all camps</a></li>
-            <li class="nav-bar_item"><a href="/addcamp">add camp</a></li>
-        </ul>
-    </nav>
     <div class="adv">
       <div class="text">
         <h1><%= "Camphub" %></h1>

@@ -3,223 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= camp.title %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <%- include('header') %>
     <style>
-        * {
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            color: #343a40;
+        }
 
+        .navbar {
+            background-color: #343a40;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .spacer {
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #495057;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+        }
+
+        .camp-image {
             width: 100%;
-            height: 100px;
+            border-radius: 15px;
+            transition: transform 0.3s;
         }
-        body {
-            font-family: "Open Sans", sans-serif;
-            background-color:#1F4769;
-                                    animation: bg 30s infinite linear;
+
+        .camp-image:hover {
+            transform: scale(1.05);
         }
-        nav {
+
+        .camp-details {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .camp-title {
+            font-size: 2.5rem;
+            margin: 1rem 0;
+            color: #343a40;
+        }
+
+        .camp-price {
+            font-size: 2rem;
+            color: #28a745;
+        }
+
+        .camp-description {
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin: 1rem 0;
+        }
+
+        .camp-location {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .camp-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .camp-actions .btn {
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .camp-actions .btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .review-section {
+            margin-top: 3rem;
+        }
+
+        .review-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #343a40;
+            text-align: center;
+        }
+
+        .review-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .review-item {
+            background-color: #f1f1f1;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-body {
+            font-size: 1.1rem;
+            color: #343a40;
+        }
+
+        .review-rating {
+            font-size: 1.1rem;
+            color: #ffc107;
+        }
+
+        .review-author {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background-color:#1F4769;
-                        animation: bg 30s infinite linear;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #343a40;
+        }
+
+        .modal-body textarea,
+        .modal-body input[type="number"] {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        .modal-body textarea:focus,
+        .modal-body input[type="number"]:focus {
+            border-color: #007bff;
+        }
+
+        .modal-footer {
             display: flex;
             justify-content: space-between;
         }
-        .logo {
-            padding: 20px;
-            text-decoration: none;
-            color: #fff;
-            text-transform: uppercase;
-        }
-        nav .nav-bar {
-            padding: 20px;
-            display: flex;
-        }
-        nav .nav-bar .nav-bar_item {
-            list-style-type: none;
-            padding: 0px 20px;
-        }
-        nav .nav-bar .nav-bar_item a {
-            position: relative;
-            display: block;
-            padding-bottom: 5px;
-            text-decoration: none;
-            color: #fff;
-            text-transform: uppercase;
-        }
-        nav .nav-bar .nav-bar_item a:after {
-            content: "";
-            position: absolute;
-            width: 0%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: #fff;
-            transition: 0.1s ease-in-out;
-        }
-        nav .nav-bar .nav-bar_item a:hover:after {
-            width: 100%;
-        }
-        @import url('https://fonts.googleapis.com/css?family=Exo:400,700,800,600|Montserrat:400,700|Roboto:400,700&display=swap');
 
-        *,
-        *:before,
-        *:after {
-          box-sizing: border-box;
+        .btn-close {
+            background-color: #6c757d;
         }
 
-        html {
-          font-size: 18px;
+        .btn-close:hover {
+            background-color: #5a6268;
         }
 
-
-
-        .card {
-          width: 50vw;
-          height: auto;
-          position: absolute;
-          top: 30vh;
-          left: 25vw;
-          background: #fff;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-          border-radius: 10px;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 20px;
-        }
-
-        .product-info {
-          text-align: center;
-        }
-
-        .product-name,
-        .product-price {
-          font-family: 'Exo', sans-serif;
-        }
-
-        .product-name {
-          font-size: 2.5em;
-          font-weight: 800;
-          text-transform: uppercase;
-          margin: 0.5em 0;
-        }
-
-        .product-price {
-          font-size: 3em;
-          font-weight: 900;
-          color: #0f7a94;
-          margin: 0.5em 0;
-        }
-
-        .product-price::before {
-          content: "$ ";
-        }
-
-        .product-slogan {
-          font-family: 'Montserrat', sans-serif;
-          color: #666;
-          margin: 1em 0;
-        }
-
-        .button {
-          font-family: 'Montserrat', sans-serif;
-          background: #333;
-          font-size: 1em;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          text-decoration: none;
-          color: #fff;
-          padding: 15px 30px;
-          border-radius: 7px;
-          transition: background 0.25s ease;
-          margin: 0.5em 0;
-        }
-
-        .button:hover {
-          background: #555;
+        img {
+            height: 40vh;
+            width: 60vw;
+            object-fit: cover;
+            border-radius: 8px;
         }
 
     </style>
 </head>
 <body>
-    <nav>
-        <a class="logo" href="#">Camphub</a>
-        <ul class="nav-bar">
-            <li class="nav-bar_item"><a href="/">home</a></li>
-            <li class="nav-bar_item"><a href="/allcamps">all camps</a></li>
-            <li class="nav-bar_item"><a href="/addcamp">add camp</a></li>
-        </ul>
-    </nav>
-
-    <% if (camp) { %>
-        <div class="card">
-            <div class="product-info">
-                <h1 class="product-name"><%= camp.title %></h1>
-                <h2 class="product-price"><%= camp.price %></h2>
-                <h3 class="product-slogan"><%= camp.description %></h3>
-                <a class="button edit-btn" data-camp-id="<%= camp._id %>" href="#">edit</a>
-                <a class="button delete-btn" data-camp-id="<%= camp._id %>" href="#">delete</a>
-            </div>
-        </div>
-    <% } else { %>
-        <div class="card">
-                    <div class="product-info">
-                        <h1 class="product-name"><%= "successfully deleted" %></h1>
-                    </div>
+    <div class="container">
+        <% if (camp) { %>
+            <img src="<%= camp.imageUrl ? camp.imageUrl : `https://source.unsplash.com/featured/?${encodeURIComponent(camp.title)}` %>" alt="<%= camp.title %>" class="camp-image">
+            <div class="camp-details">
+                <h1 class="camp-title"><%= camp.title %></h1>
+                <p class="camp-price">$<%= camp.price %></p>
+                <p class="camp-description"><%= camp.description %></p>
+                <p class="camp-location"><i class="fas fa-map-marker-alt"></i> <%= camp.location %></p>
+                <div class="camp-actions">
+                    <a class="btn" href="/editcamp/<%= camp._id %>"><i class="fas fa-edit"></i> Edit</a>
+                    <a class="btn btn-delete" href="/deletecamp/<%= camp._id %>"><i class="fas fa-trash-alt"></i> Delete</a>
+                    <button class="btn" id="add-review-btn"><i class="fas fa-comment"></i> Add Review</button>
                 </div>
-    <% } %>
+            </div>
+            <div class="review-section">
+                <h2 class="review-title">Reviews</h2>
+                <% if (camp.reviews.length > 0) { %>
+                    <ul class="review-list">
+                        <% camp.reviews.forEach(function(review) { %>
+                            <li class="review-item">
+                                <p class="review-body"><%= review.body %></p>
+                                <p class="review-rating"><%= '⭐'.repeat(review.rating) %></p>
+                                <p class="review-author">- <%= review.author %></p>
+                            </li>
+                        <% }) %>
+                    </ul>
+                <% } else { %>
+                    <p>No reviews yet.</p>
+                <% } %>
+            </div>
+        <% } else { %>
+            <div class="camp-details">
+                <h1 class="camp-title">Campground not found</h1>
+            </div>
+        <% } %>
+    </div>
 
+    <!-- Review Modal -->
+    <div class="modal" id="review-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Review</h2>
+            </div>
+            <form action="/camp/<%= camp._id %>/reviews" method="POST" class="modal-body">
+                <textarea name="body" rows="5" placeholder="Write your review here..." required></textarea>
+                <input type="number" name="rating" min="1" max="5" placeholder="Rating (1-5)" required>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-close" id="close-modal-btn">Close</button>
+                    <button type="submit" class="btn">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Function to handle edit button click
-            $('.edit-btn').click(function() {
-                // Retrieve the camp ID from data attribute
-                var campId = $(this).data('camp-id');
-                // Send AJAX request to editcamp route
-                $.ajax({
-                    url: '/editcamp/' + campId,
-                    type: 'GET',
-                    success: function(response) {
-                        // Optionally handle success response
-                        console.log('Campground editing initiated');
-                        // Redirect to the form page for editing
-                        window.location.href = '/editcamp/' + campId;
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle errors
-                        console.error('Error initiating campground editing:', error);
-                    }
-                });
+            // Function to handle delete button click
+            $('.btn-delete').click(function(event) {
+                event.preventDefault();
+                var deleteUrl = "/deletecamp/<%= camp.id %>";
+                if (confirm('Are you sure you want to delete this campground?')) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: 'POST',
+                        success: function(result) {
+                            window.location.href = '/allcamps';
+                        },
+                        error: function(err) {
+                            console.error('Error deleting campground:', err);
+                        }
+                    });
+                }
             });
 
-            // Function to handle delete button click
-            $('.delete-btn').click(function() {
-                // Retrieve the camp ID from data attribute
-                var campId = $(this).data('camp-id');
-                // Send AJAX request to deletecamp route
-                $.ajax({
-                    url: '/deletecamp/' + campId,
-                    type: 'POST',
-                    success: function(response) {
-                        // Optionally handle success response
-                        console.log('Campground deleted successfully');
-                        // For example, reload the page after deletion
-                        window.location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle errors
-                        console.error('Error deleting campground:', error);
-                    }
-                });
+            // Show the review modal
+            $('#add-review-btn').click(function() {
+                $('#review-modal').css('display', 'flex');
+            });
+
+            // Close the review modal
+            $('#close-modal-btn').click(function() {
+                $('#review-modal').css('display', 'none');
             });
         });
     </script>
-
 </body>
 </html>
